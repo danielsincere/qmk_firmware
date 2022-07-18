@@ -248,12 +248,13 @@ void oled_render_logo(void) {
     oled_write_P(crkbd_logo, false);
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_left()) {
         print_status_primary();
     } else {
         oled_render_logo();
     }
+    return true;
 }
 
 #endif
