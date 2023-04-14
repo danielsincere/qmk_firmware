@@ -12,9 +12,9 @@ enum danramteke_layers {
     _COLMK,
     _QWERT,
 
+    _ADJST,
     _LOWER,
     _RAISE,
-    _ADJST,
 };
 
 enum custom_keycodes {
@@ -24,7 +24,7 @@ enum custom_keycodes {
     U_MIRYO,
     U_COLMK,
     U_QWERT,
-    U_ADJST,
+
 
     U_PRVWD,
     U_NXTWD,
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_MIRYOKU_MOUSE] = LAYOUT(
     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_AGIN, KC_PASTE,KC_COPY,  KC_CUT, KC_UNDO, _______,
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                   XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, KC_ACL2, KC_ACL1, KC_ACL0,                   XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
+    XXXXXXX, XXXXXXX, KC_ACL2, KC_ACL1, KC_ACL0, XXXXXXX,                   XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
                                         XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2
   ),
 
@@ -101,14 +101,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,      KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
       KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,      KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
       KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_D,      KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                       KC_LCTL,   KC_LSFT, U_LOWER, U_ADJST,  KC_SPC, XXXXXXX
+                                       KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
   ),
 
   [_QWERT] = LAYOUT( \
         KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
         KC_TAB,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
         KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                            KC_N,    KC_M, U_LOWER, U_ADJST,  KC_SPC, XXXXXXX
+                                            KC_N,    KC_M, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
     ),
 
   [_LOWER] = LAYOUT(
@@ -190,7 +190,7 @@ void print_status_primary(void) {
                 oled_write_ln_P(PSTR("Qwert"), false);
 
                     switch (get_highest_layer(layer_state)) {
-                        case _COLMK:
+                        case _QWERT:
                             oled_write_ln_P(PSTR("Base "), false);
                             break;
                         case _LOWER:
@@ -305,10 +305,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_move(_QWERT);
             return false;
 
-        case U_ADJST:
-            set_single_persistent_default_layer(_ADJST);
-            layer_move(_ADJST);
-            return false;
 
         case U_LOWER:
             if (record->event.pressed) {
