@@ -10,10 +10,11 @@ enum danramteke_layers {
       _MIRYOKU_MOUSE,
 
     _COLMK,
-      _LOWER,
-      _RAISE,
+    _QWERT,
 
-    _ADJUST,
+    _LOWER,
+    _RAISE,
+    _ADJST,
 };
 
 enum custom_keycodes {
@@ -22,6 +23,8 @@ enum custom_keycodes {
 
     U_MIRYO,
     U_COLMK,
+    U_QWERT,
+    U_ADJST,
 
     U_PRVWD,
     U_NXTWD,
@@ -30,7 +33,7 @@ enum custom_keycodes {
     U_DLINE
 };
 
-#define MO_ADJ MO(_ADJUST)
+#define MO_ADJ MO(_ADJST)
 
 
 #define LGUI_A LGUI_T(KC_A)
@@ -76,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MIRYOKU_FUN] = LAYOUT(
     _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   KC_PSCR,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SLCK,                   XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI, _______,
+    XXXXXXX, KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SCRL,                   XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI, _______,
     XXXXXXX, KC_F10,  KC_F1,   KC_F2,   KC_F3,   KC_PAUS,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                         KC_APP,  KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   ),
@@ -88,18 +91,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_MIRYOKU_MOUSE] = LAYOUT(
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ACL2,                   KC_AGIN, KC_PASTE,KC_COPY,  KC_CUT, KC_UNDO, _______,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_ACL1,                   XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
-    XXXXXXX, XXXXXXX, KC_ALGR, XXXXXXX, XXXXXXX, KC_ACL0,                   XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_AGIN, KC_PASTE,KC_COPY,  KC_CUT, KC_UNDO, _______,
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                   XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______,
+    XXXXXXX, XXXXXXX, XXXXXXX, KC_ACL2, KC_ACL1, KC_ACL0,                   XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
                                         XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2
   ),
 
   [_COLMK] = LAYOUT( \
-      KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,     KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT,  KC_MUTE,
-      KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,     KC_G,                      KC_M,    KC_N,    KC_E,    KC_I,    KC_O,  KC_VOLU,
-      KC_SPC,   KC_Z,   KC_X,    KC_C,    KC_D,     KC_V,                      KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_VOLD,
-                                      KC_LCTRL,  KC_LSFT, U_LOWER, U_RAISE, KC_LGUI,  KC_ENT
+      KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,      KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
+      KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,      KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
+      KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_D,      KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
+                                       KC_LCTL,   KC_LSFT, U_LOWER, U_ADJST,  KC_SPC, XXXXXXX
   ),
+
+  [_QWERT] = LAYOUT( \
+        KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
+        KC_TAB,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
+        KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
+                                            KC_N,    KC_M, U_LOWER, U_ADJST,  KC_SPC, XXXXXXX
+    ),
 
   [_LOWER] = LAYOUT(
         KC_0, KC_LBRC,  KC_7,    KC_8,    KC_9,  KC_RBRC,                   KC_AGIN,KC_PASTE, KC_COPY,  KC_CUT, KC_UNDO, _______,
@@ -108,16 +118,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                        _______,  _______, _______, _______, _______, _______
   ),
 
-  [_RAISE] = LAYOUT(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    KC_ESC,  KC_ENT,  KC_TAB, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_BSPC,  KC_SPC,  KC_DEL, XXXXXXX, XXXXXXX, _______,
-                                        _______, _______, _______, _______, _______, _______
-  ),
-
-  [_ADJUST] = LAYOUT(
+  [_ADJST] = LAYOUT(
     XXXXXXX, CG_SWAP, CG_NORM, CG_TOGG, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, U_MIRYO, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    XXXXXXX, XXXXXXX, XXXXXXX, U_MIRYO, U_QWERT, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, XXXXXXX, U_COLMK, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                         _______, _______, _______, _______, _______, _______
   )
@@ -138,7 +141,7 @@ void print_status_primary(void) {
                 case _MIRYOKU_COLEMAK:
                     oled_write_ln_P(PSTR("Base "), false);
                     break;
-                case _ADJUST:
+                case _ADJST:
                     oled_write_ln_P(PSTR("Adjst"), false);
                     break;
                 case _MIRYOKU_FUN:
@@ -171,13 +174,10 @@ void print_status_primary(void) {
                     case _COLMK:
                         oled_write_ln_P(PSTR("Base "), false);
                         break;
-                    case _RAISE:
-                        oled_write_ln_P(PSTR("Raise"), false);
-                        break;
                     case _LOWER:
                         oled_write_ln_P(PSTR("Lower"), false);
                         break;
-                    case _ADJUST:
+                    case _ADJST:
                         oled_write_ln_P(PSTR("Adjst"), false);
                         break;
                     default:
@@ -185,6 +185,25 @@ void print_status_primary(void) {
                         break;
                 }
             break;
+
+            case _QWERT:
+                oled_write_ln_P(PSTR("Qwert"), false);
+
+                    switch (get_highest_layer(layer_state)) {
+                        case _COLMK:
+                            oled_write_ln_P(PSTR("Base "), false);
+                            break;
+                        case _LOWER:
+                            oled_write_ln_P(PSTR("Lower"), false);
+                            break;
+                        case _ADJST:
+                            oled_write_ln_P(PSTR("Adjst"), false);
+                            break;
+                        default:
+                            oled_write_ln_P(PSTR("? ? ?"), false);
+                            break;
+                    }
+                break;
         default:
             oled_write_ln_P(PSTR(" ?  ?  ?"), true);
             oled_write_ln_P(PSTR(""), false);
@@ -281,22 +300,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_move(_COLMK);
             return false;
 
+        case U_QWERT:
+            set_single_persistent_default_layer(_QWERT);
+            layer_move(_QWERT);
+            return false;
+
+        case U_ADJST:
+            set_single_persistent_default_layer(_ADJST);
+            layer_move(_ADJST);
+            return false;
+
         case U_LOWER:
             if (record->event.pressed) {
                 layer_on(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                update_tri_layer(_LOWER, _RAISE, _ADJST);
             } else {
                 layer_off(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                update_tri_layer(_LOWER, _RAISE, _ADJST);
             }
             return false;
         case U_RAISE:
             if (record->event.pressed) {
                 layer_on(_RAISE);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                update_tri_layer(_LOWER, _RAISE, _ADJST);
             } else {
                 layer_off(_RAISE);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
+                update_tri_layer(_LOWER, _RAISE, _ADJST);
             }
             return false;
 
