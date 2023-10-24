@@ -278,15 +278,6 @@ bool oled_task_user(void) {
 
 #endif
 
-
-
-layer_state_t default_layer_state_set_user(layer_state_t state) {
-    keymap_config.swap_lctl_lgui = true;
-    keymap_config.swap_rctl_rgui = true;
-    return state;
-}
-
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
