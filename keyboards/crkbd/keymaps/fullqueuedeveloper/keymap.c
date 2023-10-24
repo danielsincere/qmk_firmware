@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 
-enum danramteke_layers {
+enum fq_layers {
     _MIRYOKU_COLEMAK = 0,
       _MIRYOKU_NAV,
       _MIRYOKU_NUM,
