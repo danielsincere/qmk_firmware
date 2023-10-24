@@ -269,7 +269,7 @@ void oled_render_logo(void) {
 
 bool oled_task_user(void) {
     if (is_keyboard_left()) {
-        print_status_primary();
+      //  print_status_primary();
     } else {
         oled_render_logo();
     }

@@ -1,14 +1,14 @@
 # The `fullqueuedeveloper` Layout
 
-This layout offers a slightly modified Miryoku with a plain Colemak layer 
+This layout offers a slightly modified Miryoku with a plain Colemak layer
 for gaming (no tap-mods).
 
-This layout is based on Miryoku, the default Sofle layout, and a few other 
+This layout is based on Miryoku, the default Sofle layout, and a few other
 tricks.
 
 ## Build and install
 
-    make crkbd:fullqueuedeveloper && make crkbd:fullqueuedeveloper:dfu
+    qmk compile -kb crkbd -km fullqueuedeveloper && qmk flash -kb crkbd -km fullqueuedeveloper -bl dfu
 
 ## The `ADJUST` Layer
 
