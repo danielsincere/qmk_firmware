@@ -199,7 +199,7 @@ void print_status_primary(void) {
             oled_write_ln_P(PSTR("ColFN"), false);
 
                 switch (get_highest_layer(layer_state)) {
-                    case _COLMK:
+                    case _COLFN:
                         oled_write_ln_P(PSTR("Base "), false);
                         break;
                     case _LOWER:
@@ -317,6 +317,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case U_COLMK:
             set_single_persistent_default_layer(_COLMK);
             layer_move(_COLMK);
+            return false;
+
+        case U_COLFN:
+            set_single_persistent_default_layer(_COLFN);
+            layer_move(_COLFN);
             return false;
 
         case U_QWERT:
