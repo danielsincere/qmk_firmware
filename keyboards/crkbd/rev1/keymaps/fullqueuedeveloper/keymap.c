@@ -10,6 +10,7 @@ enum fq_layers {
       _MIRYOKU_MOUSE,
 
     _COLMK,
+    _COLFN,
     _QWERT,
 
     _ADJST,
@@ -23,6 +24,7 @@ enum custom_keycodes {
 
     U_MIRYO,
     U_COLMK,
+    U_COLFN,
     U_QWERT,
 
 
@@ -104,6 +106,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                        KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
   ),
 
+  [_COLFN] = LAYOUT( \
+        KC_ESC,  KC_F1,  KC_F2,   KC_F3,   KC_F4,      KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
+        KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,      KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
+        KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_D,      KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
+                                         KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
+    ),
+
   [_QWERT] = LAYOUT( \
         KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
         KC_TAB,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
@@ -121,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJST] = LAYOUT(
     XXXXXXX, CG_SWAP, CG_NORM, CG_TOGG, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, XXXXXXX, U_MIRYO, U_QWERT, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, U_COLMK, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    XXXXXXX, XXXXXXX, XXXXXXX, U_COLMK, U_COLFN, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                         _______, _______, _______, _______, _______, _______
   )
 };
@@ -169,6 +178,25 @@ void print_status_primary(void) {
             break;
         case _COLMK:
             oled_write_ln_P(PSTR("Colmk"), false);
+
+                switch (get_highest_layer(layer_state)) {
+                    case _COLMK:
+                        oled_write_ln_P(PSTR("Base "), false);
+                        break;
+                    case _LOWER:
+                        oled_write_ln_P(PSTR("Lower"), false);
+                        break;
+                    case _ADJST:
+                        oled_write_ln_P(PSTR("Adjst"), false);
+                        break;
+                    default:
+                        oled_write_ln_P(PSTR("? ? ?"), false);
+                        break;
+                }
+            break;
+
+            case _COLFN:
+            oled_write_ln_P(PSTR("ColFN"), false);
 
                 switch (get_highest_layer(layer_state)) {
                     case _COLMK:
