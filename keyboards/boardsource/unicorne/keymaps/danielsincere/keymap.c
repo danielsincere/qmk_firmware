@@ -485,6 +485,57 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+
+    uint8_t layer = get_highest_layer(layer_state);
+
+    for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+        for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+            uint8_t index = g_led_config.matrix_co[row][col];
+
+            if (index >= led_min && index < led_max && index != NO_LED) {
+
+                uint16_t key_code = keymap_key_to_keycode(layer, (keypos_t){col,row});
+                switch (key_code) {
+                    case LGUI_A:
+                    case RGUI_O:
+                    case KC_LGUI:
+                    case KC_RGUI:
+                        if (keymap_config.swap_lctl_lgui) {
+                            rgb_matrix_set_color(index, RGB_WHITE);
+                        } else {
+                            rgb_matrix_set_color(index, RGB_GREEN);
+                        }
+                        break;
+                    case LSFTT:
+                    case RSFT_N:
+                    case KC_LSFT:
+                    case KC_RSFT:
+                    case KC_LALT:
+                    case KC_RALT:
+                    case LALT_R:
+                    case RALT_I:
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                        break;
+                    case LCTL_S:
+                    case RCTL_E:
+                    case KC_LCTL:
+                    case KC_RCTL:
+                        if (!keymap_config.swap_lctl_lgui) {
+                            rgb_matrix_set_color(index, RGB_WHITE);
+                        } else {
+                            rgb_matrix_set_color(index, RGB_GREEN);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    return false;
+}
 
 #if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
