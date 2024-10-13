@@ -505,10 +505,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                     case RGUI_O:
                     case KC_LGUI:
                     case KC_RGUI:
-                        if (keymap_config.swap_lctl_lgui) {
+                        if (!keymap_config.swap_lctl_lgui) {
                             rgb_matrix_set_color(index, RGB_WHITE);
                         } else {
-                            rgb_matrix_set_color(index, RGB_GREEN);
+                            rgb_matrix_set_color(index, RGB_PURPLE);
                         }
                         break;
                     case LSFTT:
@@ -519,16 +519,16 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                     case KC_RALT:
                     case LALT_R:
                     case RALT_I:
-                        rgb_matrix_set_color(index, RGB_GREEN);
+                        rgb_matrix_set_color(index, RGB_PURPLE);
                         break;
                     case LCTL_S:
                     case RCTL_E:
                     case KC_LCTL:
                     case KC_RCTL:
-                        if (!keymap_config.swap_lctl_lgui) {
+                        if (keymap_config.swap_lctl_lgui) {
                             rgb_matrix_set_color(index, RGB_WHITE);
                         } else {
-                            rgb_matrix_set_color(index, RGB_GREEN);
+                            rgb_matrix_set_color(index, RGB_PURPLE);
                         }
                         break;
                     default:
