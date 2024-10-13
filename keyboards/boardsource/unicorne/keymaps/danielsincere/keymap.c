@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "transactions.h"
 #if __has_include("keymap.h")
 #    include "keymap.h"
 #endif
@@ -539,6 +540,32 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
 
     return false;
+}
+
+void housekeeping_task_user(void) {
+    if (is_keyboard_master()) {
+        static uint32_t last_sync = 0;
+        if (timer_elapsed32(last_sync) > 500) {
+            master_to_slave_t m2s = keymap_config.swap_lctl_lgui ? (master_to_slave_t){0} : (master_to_slave_t){6};
+            if(transaction_rpc_exec(USER_SYNC_LGUI_SWAP, sizeof(m2s), &m2s, 0, NULL)) {
+                last_sync = timer_read32();
+            }
+        }
+    }
+}
+
+void user_sync_lgui_swap_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
+    const master_to_slave_t *m2s = (const master_to_slave_t*)in_data;
+    // slave_to_master_t *s2m = (slave_to_master_t*)out_data;
+    if (m2s->is_swapped == 0) {
+        keymap_config.swap_lctl_lgui = true;
+    } else {
+        keymap_config.swap_lctl_lgui = false;
+    }
+}
+
+void keyboard_post_init_user(void) {
+    transaction_register_rpc(USER_SYNC_LGUI_SWAP, user_sync_lgui_swap_slave_handler);
 }
 
 #if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
