@@ -40,8 +40,6 @@ enum custom_keycodes {
     U_DLINE
 };
 
-#define MO_ADJ MO(_ADJST)
-
 #define LGUI_A LGUI_T(KC_A)
 #define LALT_R LALT_T(KC_R)
 #define LCTL_S LCTL_T(KC_S)
@@ -56,8 +54,8 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [_MIRYOKU_COLEMAK] = LAYOUT_split_3x6_3(\
-     MO_ADJ,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, KC_MUTE,
+  [_MIRYOKU_COLEMAK] = LAYOUT_split_3x6_3(
+ MO(_ADJST),    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, KC_MUTE,
    KC_PASTE,  LGUI_A,  LALT_R,  LCTL_S,   LSFTT,    KC_G,                      KC_M,  RSFT_N,  RCTL_E,  RALT_I,  RGUI_O, KC_VOLU,
     KC_COPY,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                      KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_VOLD,
 
@@ -110,21 +108,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
      KC_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
      KC_ENT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                        KC_LCTL, KC_LSFT, U_LOWER,  MO_ADJ,  KC_SPC,  KC_ENT
+                                        KC_LCTL, KC_LSFT, U_LOWER,
+                                                                MO(_ADJST),  KC_SPC,  KC_ENT
   ),
 
   [_COLFN] = LAYOUT_split_3x6_3( \
      KC_ESC,   KC_F4,   KC_F3,   KC_F2,   KC_F1,    KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
      KC_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
      KC_ENT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                        KC_LCTL, KC_LSFT, U_LOWER, MO_ADJ,   KC_SPC,  KC_ENT
+                                        KC_LCTL, KC_LSFT, U_LOWER,
+                                                                MO(_ADJST),  KC_SPC,  KC_ENT
     ),
 
   [_QWERT] = LAYOUT_split_3x6_3( \
      KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
      KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
      KC_ENT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                           KC_N,    KC_M, U_LOWER,  MO_ADJ,  KC_SPC, KC_ENT
+                                           KC_N,    KC_M, U_LOWER,
+                                                                MO(_ADJST),  KC_SPC, KC_ENT
     ),
 
   [_LOWER] = LAYOUT_split_3x6_3(
@@ -172,8 +173,8 @@ void print_status_primary(void) {
                 case _MIRYOKU_NAV:
                     oled_write_ln_P(PSTR("Nav  "), false);
                     break;
-                case _MIRYOKU_MEDIA:
-                    oled_write_ln_P(PSTR("Media"), false);
+                case _MIRYOKU_POINTER:
+                    oled_write_ln_P(PSTR("Point"), false);
                     break;
                 case _MIRYOKU_MOUSE:
                     oled_write_ln_P(PSTR("Mouse"), false);
