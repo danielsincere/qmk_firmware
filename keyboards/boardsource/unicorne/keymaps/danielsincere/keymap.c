@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "transactions.h"
+#include "pointing_device.h"
 #if __has_include("keymap.h")
 #    include "keymap.h"
 #endif
@@ -8,6 +9,8 @@
 typedef struct _master_to_slave_t {
     int8_t is_swapped;
 } master_to_slave_t;
+
+uint16_t joystick_speed = DEFAULT_JOYSTICK_SPEED;
 
 enum sincere_layers {
     _MIRYOKU_COLEMAK = 0,
@@ -41,7 +44,11 @@ enum custom_keycodes {
     U_NXTWD,
     U_LSTRT,
     U_LEND,
-    U_DLINE
+    U_DLINE,
+
+    U_DPIUP,
+    U_DPIDN,
+    U_DPIMD
 };
 
 #define LGUI_A LGUI_T(KC_A)
@@ -95,9 +102,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         KC_APP,  KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   ),
   [_MIRYOKU_POINTER] = LAYOUT_split_3x6_3(
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN3,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_BTN1,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN2,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN3,                   U_DPIUP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_BTN1,                   U_DPIDN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN2,                   U_DPIMD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                         XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2
   ),
 
@@ -281,10 +288,10 @@ void print_status_primary(void) {
     } else {
         oled_write_P(PSTR("Win"), true);
     }
+    oled_write_ln_P(PSTR(""), false);
+    oled_write_ln_P(PSTR(get_u16_str(joystick_speed, ' ')), false);
+    oled_write_ln_P(PSTR(""), false);
 
-    oled_write_ln_P(PSTR(""), false);
-    oled_write_ln_P(PSTR(""), false);
-    oled_write_ln_P(PSTR(""), false);
     oled_write_ln_P(PSTR(""), false);
 
 }
@@ -490,8 +497,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_Z);
             }
             return false;
+
+        case U_DPIUP:
+            if (record->event.pressed) {
+                joystick_speed += 1;
+            }
+            return false;
+
+        case U_DPIDN:
+            if (record->event.pressed) {
+                joystick_speed -= 1;
+                if (joystick_speed <=0) {
+                    joystick_speed = 1;
+                }
+            }
+            return false;
+
+        case U_DPIMD:
+            if (record->event.pressed) {
+                joystick_speed = DEFAULT_JOYSTICK_SPEED;
+            }
+            return false;
     }
     return true;
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    mouse_report.x = joystick_speed * mouse_report.x;
+    mouse_report.y = joystick_speed * mouse_report.y;
+    return mouse_report;
 }
 
 void keyboard_pre_init_user(void) {
