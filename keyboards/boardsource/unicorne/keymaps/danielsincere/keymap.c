@@ -3,7 +3,11 @@
 #if __has_include("keymap.h")
 #    include "keymap.h"
 #endif
+#include <stdint.h>
 
+typedef struct _master_to_slave_t {
+    int8_t is_swapped;
+} master_to_slave_t;
 
 enum sincere_layers {
     _MIRYOKU_COLEMAK = 0,
