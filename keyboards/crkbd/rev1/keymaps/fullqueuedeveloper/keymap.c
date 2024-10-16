@@ -103,21 +103,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,      KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
       KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,      KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
       KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_D,      KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                       KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
+                                       KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, KC_ENT
   ),
 
   [_COLFN] = LAYOUT( \
         KC_ESC,  KC_F4,  KC_F3,   KC_F2,   KC_F1,      KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
         KC_TAB,   KC_A,   KC_R,    KC_S,    KC_T,      KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
         KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_D,      KC_V,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                         KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
+                                         KC_LCTL,   KC_LSFT, U_LOWER, MO_ADJ,  KC_SPC, KC_ENT
     ),
 
   [_QWERT] = LAYOUT( \
         KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_MUTE,
         KC_TAB,   KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_VOLU,
         KC_ENT,   KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_VOLD,
-                                            KC_N,    KC_M, U_LOWER, MO_ADJ,  KC_SPC, XXXXXXX
+                                            KC_N,    KC_M, U_LOWER, MO_ADJ,  KC_SPC, KC_ENT
     ),
 
   [_LOWER] = LAYOUT(
@@ -128,10 +128,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ADJST] = LAYOUT(
-    XXXXXXX, CG_SWAP, CG_NORM, CG_TOGG, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    XXXXXXX, CG_TOGG, CG_SWAP, CG_NORM, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, XXXXXXX, U_MIRYO, U_QWERT, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, XXXXXXX, U_COLMK, U_COLFN, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-                                        _______, _______, _______, _______, _______, _______
+                                        QK_BOOT, _______, _______, _______, _______, _______
   )
 };
 
